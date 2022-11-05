@@ -28,12 +28,19 @@ namespace BattlePlanner
 		                                         $"{ExitPrefix} - closes the program\n";
 
 		public const string EditMenuHelpPrefix = "h";
+
 		public const string EditMenuExitPrefix = "exit";
+
 		public const string EditMenuAddPrefix = "a";
+
 		public const string EditMenuEditPrefix = "e";
+
 		public const string EditMenuRenamePrefix = "r";
+
 		public const string EditMenuDeletePrefix = "d";
+
 		public const string EditMenuListPrefix = "ls";
+
 		public static readonly string EditMenuHelpText = $"{EditMenuHelpPrefix} - Displays help.\n" +
 		                                                 $"{EditMenuListPrefix} - Prints list of all current requirements.\n" +
 		                                                 $"{EditMenuAddPrefix} - Adds a requirement.\n" +
