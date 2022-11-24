@@ -38,6 +38,7 @@ namespace BattlePlanner
 						Console.WriteLine("Provide the new resource name: ");
 						string name = Console.ReadLine();
 						AddResource(militaryResources, name);
+						
 					}
 				#endregion
 
@@ -49,12 +50,7 @@ namespace BattlePlanner
 						Console.WriteLine("Provide the new name: ");
 						string newName = Console.ReadLine();
 						MilitaryResource temp = GetResourceByName(militaryResources, name);
-						if (temp.Name != null)
-							temp.ChangeName(newName);
-						else
-						{
-							Console.WriteLine("There's no such resource");
-						}
+						RenameResource(temp, newName);
 					}
 				#endregion
 
@@ -66,14 +62,7 @@ namespace BattlePlanner
 							Console.WriteLine("Provide name of the resource you want to delete: ");
 							string name = Console.ReadLine();
 							MilitaryResource temp = GetResourceByName(militaryResources, name);
-							if (temp.Name != null)
-							{
-								militaryResources.Remove(temp);
-							}
-							else
-							{
-								Console.WriteLine("No such resource");
-							}
+							DeleteResource(temp, militaryResources);
 							
 						}
 						else
@@ -101,11 +90,7 @@ namespace BattlePlanner
 									DisplayEditMenuHelp();
 								if (editMenuAct == Texts.EditMenuExitPrefix)
 									break;
-								if (editMenuAct == Texts.EditMenuListPrefix)
-									foreach (var keyValuePair in temp.Requirements)
-									{
-										Console.WriteLine($"{keyValuePair.Key}");
-									}
+								if (editMenuAct == Texts.EditMenuListPrefix) PrintRequirements(temp);
 
 								if (editMenuAct == Texts.ClearScreenPrefix)
 									Console.Clear();
@@ -115,24 +100,14 @@ namespace BattlePlanner
 									string scan1 = Console.ReadLine();
 									Console.WriteLine("Provide the value of the added requirement: ");
 									int scan2 = int.Parse(Console.ReadLine());
-									if(temp.AddRequirement(scan1,scan2))
-										Console.WriteLine("Requitement added.");
-									else
-										Console.WriteLine("Reuqirement of this name already exists.");
+									TryToAddRequirement(temp, scan1, scan2);
 								}
 
 								if (editMenuAct == Texts.EditMenuDeletePrefix)
 								{
 									Console.WriteLine("Provide the name of the requirement you want to delete: ");
 									string scan1 = Console.ReadLine();
-									if (temp.DeleteRequirement(scan1))
-									{
-										Console.WriteLine("Requirement deleted.");
-									}
-									else
-									{
-										Console.WriteLine("No such requirement.");
-									}
+									TryToDeleteRequirement(temp, scan1);
 								}
 
 								if (editMenuAct == Texts.EditMenuRenamePrefix)
@@ -141,14 +116,7 @@ namespace BattlePlanner
 									string scan1 = Console.ReadLine();
 									Console.WriteLine("Provide the new name: ");
 									string scan2 = Console.ReadLine();
-									if (temp.RenameRequirement(scan1,scan2))
-									{
-										Console.WriteLine("Requirement renamed.");
-									}
-									else
-									{
-										Console.WriteLine("Invalid names entered");
-									}
+									TryToRenameRequirement(temp, scan1, scan2);
 								}
 
 								if (editMenuAct == Texts.EditMenuEditPrefix)
@@ -157,14 +125,7 @@ namespace BattlePlanner
 									string scan1 = Console.ReadLine();
 									Console.WriteLine("Provide the new value: ");
 									int scan2 = int.Parse(Console.ReadLine());
-									if (temp.EditRequirement(scan1,scan2))
-									{
-										Console.WriteLine("Requirement edited.");
-									}
-									else
-									{
-										Console.WriteLine("Invalid values entered.");
-									}
+									TryToEditValueOfRequirement(temp, scan1, scan2);
 								}
 							}
 							#endregion
@@ -181,6 +142,80 @@ namespace BattlePlanner
 
 			
 
+		}
+
+		private static void TryToEditValueOfRequirement(MilitaryResource temp, string scan1, int scan2)
+		{
+			if (temp.EditRequirement(scan1, scan2))
+			{
+				Console.WriteLine("Requirement edited.");
+			}
+			else
+			{
+				Console.WriteLine("Invalid values entered.");
+			}
+		}
+
+		private static void TryToRenameRequirement(MilitaryResource temp, string scan1, string scan2)
+		{
+			if (temp.RenameRequirement(scan1, scan2))
+			{
+				Console.WriteLine("Requirement renamed.");
+			}
+			else
+			{
+				Console.WriteLine("Invalid names entered");
+			}
+		}
+
+		private static void TryToDeleteRequirement(MilitaryResource temp, string scan1)
+		{
+			if (temp.DeleteRequirement(scan1))
+			{
+				Console.WriteLine("Requirement deleted.");
+			}
+			else
+			{
+				Console.WriteLine("No such requirement.");
+			}
+		}
+
+		private static void TryToAddRequirement(MilitaryResource temp, string scan1, int scan2)
+		{
+			if (temp.AddRequirement(scan1, scan2))
+				Console.WriteLine("Requitement added.");
+			else
+				Console.WriteLine("Reuqirement of this name already exists.");
+		}
+
+		private static void PrintRequirements(MilitaryResource temp)
+		{
+			foreach (var keyValuePair in temp.Requirements)
+			{
+				Console.WriteLine($"{keyValuePair.Key}");
+			}
+		}
+
+		private static void DeleteResource(MilitaryResource temp, List<MilitaryResource> militaryResources)
+		{
+			if (temp.Name != null)
+			{
+				militaryResources.Remove(temp);
+			}
+			else
+			{
+				Console.WriteLine("No such resource");
+			}
+		}
+
+		private static void RenameResource(MilitaryResource temp, string newName)
+		{
+			if (temp.Name != null)
+				temp.ChangeName(newName);
+			else
+			{
+				Console.WriteLine("There's no such resource");
+			}
 		}
 
 		private static MilitaryResource GetResourceByName(List<MilitaryResource> militaryResources, string name)
