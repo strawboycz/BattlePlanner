@@ -8,7 +8,17 @@ namespace BattlePlanner
 		static void Main(string[] args)
 		{
 			List<MilitaryResource> militaryResources = new List<MilitaryResource>();
-			while (true)
+
+			#region Load
+
+			Console.WriteLine(Loading.LoadData(Loading.GetJSON()));
+			if (Loading.CheckForFile())
+			{
+				militaryResources = Loading.LoadData(Loading.GetJSON());
+			}
+
+			#endregion
+						while (true)
 			{
 				Console.WriteLine($"Choose an action ({Texts.HelpPrefix} for help): ");
 				string act = Console.ReadLine();
@@ -136,6 +146,17 @@ namespace BattlePlanner
 							Console.WriteLine("There's no such resource");
 						}
 					}
+								#endregion
+
+				#region Save
+
+				if (act == Texts.SavePrefix)
+				{
+					Saving.InitializeJSONFile();
+					Saving.SaveJSON(Saving.GenerateJSON(militaryResources));
+				}
+								
+
 				#endregion
 
 			}

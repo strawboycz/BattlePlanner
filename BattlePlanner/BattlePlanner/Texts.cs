@@ -18,14 +18,17 @@ namespace BattlePlanner
 
 		public const string HelpPrefix = "h";
 
-		public static readonly string HelpText = $"{HelpPrefix} - Displays help.\n" +
+		public const string SavePrefix = "save";
+
+				public static readonly string HelpText = $"{HelpPrefix} - Displays help.\n" +
 		                                         $"{ListPrefix} - Prints list of all current military resources.\n" +
 		                                         $"{AddPrefix} - Adds a resource.\n" +
 		                                         $"{EditPrefix} - Opens the menu for editing requirements of a resource.\n" +
 		                                         $"{RenamePrefix} - Renames a resource.\n" +
 		                                         $"{DeletePrefix} - Deletes a resource.\n" +
 		                                         $"{ClearScreenPrefix} - Clears the screen.\n" +
-		                                         $"{ExitPrefix} - closes the program\n";
+		                                         $"{ExitPrefix} - closes the program\n" +
+		                                         $"{SavePrefix} - saves all data\n";
 
 		public const string EditMenuHelpPrefix = "h";
 

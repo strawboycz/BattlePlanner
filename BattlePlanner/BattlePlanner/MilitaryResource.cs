@@ -4,6 +4,10 @@ namespace BattlePlanner
 {
 	public class MilitaryResource
 	{
+		public MilitaryResource()
+		{
+		}
+
 		public string Name { get; private set; }
 		public Dictionary<string, int> Requirements { get; private set; } = new Dictionary<string, int>();
 
